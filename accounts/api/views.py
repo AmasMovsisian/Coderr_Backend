@@ -7,6 +7,12 @@ from rest_framework.permissions import AllowAny
 
 
 class RegistrationView(APIView):
+    """
+    API view for registering a new user.
+
+    Accepts user data, validates it via RegistrationSerializer,
+    creates a user, and returns an authentication token.
+    """
     permission_classes = [AllowAny]
     def post(self, request):
         serializer = RegistrationSerializer(data=request.data)
@@ -25,6 +31,12 @@ class RegistrationView(APIView):
 
 
 class LoginView(APIView):
+    """
+    API view for authenticating an existing user.
+
+    Validates credentials via LoginSerializer and returns
+    an authentication token if successful.
+    """
     permission_classes = [AllowAny]
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
