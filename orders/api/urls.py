@@ -6,7 +6,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path("", OrderListCreateView.as_view(), name="orders-list-create"),
-    path("<int:pk>/", OrderPatchView.as_view(), name="orders-patch"),
-    path("<int:pk>/", OrderDeleteView.as_view(), name="orders-delete"),
+    path("", OrderListCreateView.as_view()),
+    path("<int:pk>/", OrderPatchView.as_view()),
+    path("<int:pk>/", OrderDeleteView.as_view()),
 ]
