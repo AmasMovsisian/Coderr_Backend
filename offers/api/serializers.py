@@ -136,9 +136,7 @@ class OfferRetrieveSerializer(serializers.ModelSerializer):
 class OfferCreateSerializer(serializers.ModelSerializer):
     """Serializer for creating an Offer with exactly three OfferDetail entries."""
 
-    details = OfferDetailSerializer(
-        many=True
-    )
+    details = OfferDetailSerializer(many=True)
 
     class Meta:
         model = Offer
@@ -172,10 +170,12 @@ class OfferCreateSerializer(serializers.ModelSerializer):
         """
         Create Offer and its related OfferDetail instances.
         """
+        request = self.context.get("request")
+
         details_data = validated_data.pop("details")
 
         offer = Offer.objects.create(
-            user=self.context["request"].user,
+            user=request.user if request else None,
             **validated_data
         )
 

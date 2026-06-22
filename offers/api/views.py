@@ -4,6 +4,7 @@ from rest_framework import filters
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 
 from offers.models import Offer
 from offers.models import OfferDetail
@@ -68,7 +69,7 @@ class OfferListCreateView(generics.ListCreateAPIView):
         if ordering == "min_price":
             queryset = queryset.order_by("min_price")
 
-        return queryset.distinct()
+        return queryset.distinct().order_by("-created_at")
 
     def get_permissions(self):
         """
@@ -93,6 +94,30 @@ class OfferListCreateView(generics.ListCreateAPIView):
         if self.request.method == "POST":
             return OfferCreateSerializer
         return OfferListSerializer
+
+    def get_serializer_context(self):
+        """
+        Ensure request context is passed to serializer.
+        """
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context
+
+    def create(self, request, *args, **kwargs):
+        """
+        Create Offer and return full retrieve representation.
+        """
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        offer = serializer.save()
+
+        return Response(
+            OfferRetrieveSerializer(
+                offer,
+                context=self.get_serializer_context()
+            ).data,
+            status=201
+        )
 
 
 class OfferDetailView(generics.RetrieveUpdateDestroyAPIView):
