@@ -93,7 +93,25 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-## 7. Run the Test Suite
+## 7. Start the Development Server
+
+```bash
+python manage.py runserver
+```
+
+The API will be available at:
+
+```text
+http://127.0.0.1:8000/
+```
+
+### Django Admin
+
+```text
+http://127.0.0.1:8000/admin/
+```
+
+## 8. Run the Test Suite
 
 Before starting development, verify the installation by running the test suite.
 
@@ -104,27 +122,6 @@ python manage.py test
 ```
 
 ### Faster Test Execution (Recommended)
-
-For significantly faster test runs, create a dedicated test settings file that uses an in-memory SQLite database and a lightweight password hasher.
-
-Create the file:
-
-`core/test_settings.py`
-
-```python
-from .settings import *  # noqa: F401, F403
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
-    }
-}
-
-PASSWORD_HASHERS = [
-    "django.contrib.auth.hashers.MD5PasswordHasher",
-]
-```
 
 Run the test suite using the optimized test settings:
 
@@ -147,22 +144,25 @@ The project includes automated tests covering:
 * Permissions
 * API behavior
 
-## 8. Start the Development Server
+### Run All Tests
 
 ```bash
-python manage.py runserver
+python manage.py test --settings=core.test_settings
 ```
 
-The API will be available at:
+### Run Tests for a Specific Application
 
-```text
-http://127.0.0.1:8000/
+```bash
+python manage.py test accounts --settings=core.test_settings
+python manage.py test offers --settings=core.test_settings
+python manage.py test orders --settings=core.test_settings
+python manage.py test reviews --settings=core.test_settings
 ```
 
-### Django Admin
+### Run Tests with Increased Verbosity
 
-```text
-http://127.0.0.1:8000/admin/
+```bash
+python manage.py test --settings=core.test_settings --verbosity=2
 ```
 
 ---
@@ -350,35 +350,6 @@ Can:
 | 500  | Internal Server Error |
 
 ---
-
-# Testing
-
-The project includes a comprehensive test suite to ensure reliability and stability.
-
-### Run All Tests
-
-```bash
-python manage.py test --settings=core.test_settings
-```
-
-### Run Tests for a Specific Application
-
-```bash
-python manage.py test accounts --settings=core.test_settings
-python manage.py test offers --settings=core.test_settings
-python manage.py test orders --settings=core.test_settings
-python manage.py test reviews --settings=core.test_settings
-```
-
-### Run Tests with Increased Verbosity
-
-```bash
-python manage.py test --settings=core.test_settings --verbosity=2
-```
-
-### Test Coverage
-
-The test suite validates:
 
 * Authentication flows (registration, login, token generation)
 * Profile CRUD operations and permissions
