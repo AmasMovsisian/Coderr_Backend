@@ -3,6 +3,7 @@ from django.db.models import Min
 from rest_framework import filters
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
@@ -75,9 +76,11 @@ class OfferListCreateView(generics.ListCreateAPIView):
         """
         Return permissions based on request method.
 
+        GET requests are public.
         POST requests require authentication and business user role.
-        Other methods allow unrestricted access.
         """
+        if self.request.method == "GET":
+            return [AllowAny()]
         if self.request.method == "POST":
             return [
                 IsAuthenticated(),
