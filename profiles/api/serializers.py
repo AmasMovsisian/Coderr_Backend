@@ -35,15 +35,12 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
         ]
 
     def update(self, instance, validated_data):
-        """
-        Update profile and related user fields.
-        """
         user_data = validated_data.pop("user", {})
         user = instance.user
 
         user.first_name = user_data.get("first_name", user.first_name)
         user.last_name = user_data.get("last_name", user.last_name)
-        user.email = validated_data.get("email", user.email)
+        user.email = user_data.get("email", user.email)
         user.save()
 
         instance.location = validated_data.get("location", instance.location)
