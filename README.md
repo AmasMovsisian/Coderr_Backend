@@ -24,8 +24,8 @@ The platform connects clients with developers. Clients can publish project reque
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/AmasMovsisian/Coderr.git
-cd Coderr
+git clone https://github.com/AmasMovsisian/Coderr_Backend.git
+cd Coderr_Backend
 ```
 
 ## 2. Create a Virtual Environment
@@ -170,7 +170,7 @@ python manage.py test --settings=core.test_settings --verbosity=2
 # Project Structure
 
 ```text
-Coderr/
+Coderr_Backend/
 │
 ├── core/                  # Django project configuration
 │   ├── settings.py
