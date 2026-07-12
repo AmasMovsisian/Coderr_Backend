@@ -6,6 +6,19 @@ The platform connects clients with developers. Clients can publish project reque
 
 ---
 
+# Frontend
+
+This repository contains the backend application only.
+
+The frontend application is maintained in a separate repository and communicates with this backend through the provided REST API endpoints.
+
+The frontend repository can be found here:
+
+**Frontend Repository:**  
+https://github.com/AmasMovsisian/Coderr_Frontend.git
+
+---
+
 ## Features
 
 * Token-based authentication and authorization
@@ -358,16 +371,6 @@ Can:
 * Review system with rating validation
 * Role-based permission enforcement
 * API response structure and status codes
-
----
-
-# Frontend
-
-This repository contains the backend application only.
-
-The frontend application is maintained in a separate repository and communicates with this backend through the provided REST API endpoints.
-
-The frontend repository will be available soon.
 
 ---
 
